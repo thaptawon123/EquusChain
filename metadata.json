@@ -1,0 +1,6 @@
+{
+  "name": "EquusChain - ตลาดซื้อขายม้าบนบล็อคเชน",
+  "description": "แพลตฟอร์มซื้อขายม้าแข่งสายพันธุ์แท้บนบล็อคเชน พร้อม Smart Contract (.sol) มาตรฐาน ERC-721 สำหรับการซื้อขาย มิ้นต์ และเพาะพันธุ์",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
