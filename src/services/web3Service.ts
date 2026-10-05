@@ -111,6 +111,35 @@ export async function connectSepoliaWallet(): Promise<{
 }
 
 /**
+ * Request MetaMask to let user pick or switch account
+ */
+export async function requestAccountSwitch(): Promise<{
+  address: string;
+  balance: number;
+  chainId: number;
+}> {
+  const eth = await getEthereum();
+  if (!eth) {
+    throw new Error('ไม่พบ MetaMask ในเบราว์เซอร์ กรุณาติดตั้ง MetaMask Extension');
+  }
+
+  try {
+    // Request permission prompt so user can select another account in MetaMask
+    await eth.request({
+      method: 'wallet_requestPermissions',
+      params: [{ eth_accounts: {} }],
+    });
+  } catch (err: any) {
+    if (err.code === 4001) {
+      throw new Error('ผู้ใช้ยกเลิกการเลือกบัญชีใน MetaMask');
+    }
+    console.warn('wallet_requestPermissions fallback:', err);
+  }
+
+  return await connectSepoliaWallet();
+}
+
+/**
  * Fetch live balance from Sepolia
  */
 export async function fetchSepoliaBalance(address: string): Promise<number> {

@@ -1,12 +1,15 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, ShoppingBag, Eye } from 'lucide-react';
+import { ArrowRight, ShieldCheck, ShoppingBag, Eye, Wallet } from 'lucide-react';
 import { HERO_IMAGE } from '../data/mockHorses';
 import { ADMIN_WALLET_ADDRESS } from '../services/web3Service';
+import { WalletState } from '../types/horse';
 
 interface HeroProps {
   onExplore: () => void;
   onOpenAdmin: () => void;
   onOpenStable: () => void;
+  onConnectMetaMask: () => void;
+  wallet: WalletState;
   isAdmin: boolean;
   lang: 'th' | 'en';
   totalHorsesCount: number;
@@ -16,6 +19,8 @@ export const Hero: React.FC<HeroProps> = ({
   onExplore,
   onOpenAdmin,
   onOpenStable,
+  onConnectMetaMask,
+  wallet,
   isAdmin,
   lang,
   totalHorsesCount
@@ -57,11 +62,11 @@ export const Hero: React.FC<HeroProps> = ({
               )}
             </h1>
 
-            {/* Sub-prose with receiver notice */}
+            {/* Sub-prose with receiver notice and Equine Passport security */}
             <p className="mt-4 text-base sm:text-lg text-stone-400 leading-relaxed max-w-2xl">
               {lang === 'th'
-                ? `ตลาดซื้อขายม้าแข่งดิจิทัลของจริงผ่านเครือข่าย Sepolia ทุกรายการซื้อโอนเงินเข้าบัญชีแอดมิน ${ADMIN_WALLET_ADDRESS.slice(0, 6)}...${ADMIN_WALLET_ADDRESS.slice(-4)} โดยตรง ไร้ตัวกลาง`
-                : `Authentic digital equine marketplace on Ethereum Sepolia. All sales proceeds dispatch directly to seller ${ADMIN_WALLET_ADDRESS}.`}
+                ? `ตลาดซื้อขายม้าแข่งสายพันธุ์แท้บนบล็อคเชน Sepolia พร้อมใบสิชล/ใบรูปพรรณม้า (Equine Passport) รับรองรหัสไมโครชิปและสายพันธุ์ เข้ารหัสคุ้มครองเอกสารเฉพาะผู้ซื้อเพื่อป้องกันการสวมสิทธิ์ รายได้เข้ากระเป๋าแอดมิน ${ADMIN_WALLET_ADDRESS.slice(0, 6)}...${ADMIN_WALLET_ADDRESS.slice(-4)} โดยตรง`
+                : `Authentic digital equine marketplace on Ethereum Sepolia. Features official Equine Passports & RFID microchip registration. Sensitive documents remain securely encrypted until purchased to prevent fraudulent breeding and identity theft.`}
             </p>
 
             {/* Clean Actions: Non-admins can only explore and view purchased */}
@@ -75,13 +80,23 @@ export const Hero: React.FC<HeroProps> = ({
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </button>
 
-              <button
-                onClick={onOpenStable}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-stone-200 bg-stone-900 hover:bg-stone-800 border border-stone-700/80 rounded-lg transition-colors font-mono"
-              >
-                <Eye className="w-4 h-4 text-amber-400" />
-                <span>{lang === 'th' ? 'ม้าที่ฉันซื้อไปแล้ว' : 'My Purchased Horses'}</span>
-              </button>
+              {!wallet.isConnected ? (
+                <button
+                  onClick={onConnectMetaMask}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-stone-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors font-mono shadow-md"
+                >
+                  <Wallet className="w-4 h-4 text-stone-950" />
+                  <span>{lang === 'th' ? 'เชื่อมต่อ MetaMask' : 'Connect MetaMask'}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={onOpenStable}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-stone-200 bg-stone-900 hover:bg-stone-800 border border-stone-700/80 rounded-lg transition-colors font-mono"
+                >
+                  <Eye className="w-4 h-4 text-amber-400" />
+                  <span>{lang === 'th' ? 'ม้าที่ฉันซื้อไปแล้ว (คอกม้า)' : 'My Purchased Horses'}</span>
+                </button>
+              )}
 
               {/* ONLY rendered for the real admin */}
               {isAdmin && (
@@ -138,7 +153,9 @@ export const Hero: React.FC<HeroProps> = ({
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
                     const target = e.currentTarget;
-                    target.style.display = 'none';
+                    if (target.src.includes('/src/assets/images/')) {
+                      target.src = target.src.replace('/src/assets/images/', '/images/');
+                    }
                   }}
                 />
                 

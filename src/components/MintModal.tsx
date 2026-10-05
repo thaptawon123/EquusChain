@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Bloodline, Gender, HorseItem, WalletState } from '../types/horse';
 import { X, Sparkles, Flame, ShieldCheck } from 'lucide-react';
 import { HORSE_NFT_CONTRACT_ADDRESS } from '../contracts/contractData';
+import {
+  goldenThoroughbred,
+  arabianStallion,
+  pearlAndalusian,
+  heroEquine
+} from '../data/mockHorses';
 
 interface MintModalProps {
   isOpen: boolean;
@@ -13,19 +19,19 @@ interface MintModalProps {
 
 const AVAILABLE_IMAGES = [
   {
-    url: '/src/assets/images/horse_golden_thoroughbred_1790702796493.jpg',
+    url: goldenThoroughbred,
     label: 'Golden Palomino (Thoroughbred)'
   },
   {
-    url: '/src/assets/images/horse_arabian_stallion_1790702784701.jpg',
+    url: arabianStallion,
     label: 'Obsidian Midnight (Arabian)'
   },
   {
-    url: '/src/assets/images/horse_pearl_andalusian_1790702807758.jpg',
+    url: pearlAndalusian,
     label: 'Dappled Pearl (Andalusian)'
   },
   {
-    url: '/src/assets/images/hero_equine_nft_1790702770948.jpg',
+    url: heroEquine,
     label: 'Emerald Dawn (Pegasus)'
   }
 ];
@@ -200,6 +206,12 @@ export const MintModal: React.FC<MintModalProps> = ({
                     alt={item.label}
                     referrerPolicy="no-referrer"
                     className="h-full w-full object-cover"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.includes('/src/assets/images/')) {
+                        target.src = target.src.replace('/src/assets/images/', '/images/');
+                      }
+                    }}
                   />
                 </button>
               ))}

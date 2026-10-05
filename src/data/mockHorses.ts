@@ -1,5 +1,11 @@
 import { HorseItem } from '../types/horse';
 import { HORSE_NFT_CONTRACT_ADDRESS } from '../contracts/contractData';
+import goldenThoroughbred from '../assets/images/horse_golden_thoroughbred_1790702796493.jpg';
+import arabianStallion from '../assets/images/horse_arabian_stallion_1790702784701.jpg';
+import pearlAndalusian from '../assets/images/horse_pearl_andalusian_1790702807758.jpg';
+import heroEquine from '../assets/images/hero_equine_nft_1790702770948.jpg';
+
+export { goldenThoroughbred, arabianStallion, pearlAndalusian, heroEquine };
 
 export const ADMIN_ADDRESS = "0x6437b1540da8566D1297bFb4126BA7324108387b";
 
@@ -21,15 +27,27 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-03-15",
     sireName: "Northern Dancer Legacy",
     damName: "Solar Flare",
-    image: "/src/assets/images/horse_golden_thoroughbred_1790702796493.jpg",
+    image: goldenThoroughbred,
     priceEth: 0.018,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "Champion Grade-I Thoroughbred with explosive final furlong acceleration and golden palomino coat.",
     thaiDescription: "ม้าแข่งสายพันธุ์ Thoroughbred ชั้นครู สถิติแชมป์ถ้วยเกรดหนึ่ง 14 จาก 16 สนาม เร่งแซงโค้งสุดท้ายยอดเยี่ยม ขนสีทองอร่าม",
     dnaHash: "0x8fa314a938cde9910d93821034f8921b380a13efd890123847aaef10928374a1",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "amber"
+    accentColor: "amber",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0101",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) & สมาคมผู้เพาะพันธุ์ม้าแข่ง",
+      issueDate: "2024-03-20",
+      microchipId: "985141002349182",
+      physicalMarkings: "แต้มด่างดาวสีขาวบริเวณหน้าผาก (Star marking), ถุงเท้าสีขาวขาหลังขวา (Right hind sock), ขวัญ 2 จุดบริเวณแผงคอด้านซ้าย",
+      colorAndCoat: "สีทองพะโลมิโน ขนแผงคอสีทองอ่อน (Palomino Gold)",
+      registrarSignature: "น.สพ. วรพงษ์ เกียรติวานิช (นายทะเบียนกลาง)",
+      documentFileName: "Equine_Passport_TEF101_GoldenEclipse.pdf",
+      verifiedHash: "0x8fa314a938cde9910d93821034f8921b380a13efd890123847aaef10928374a1"
+    }
   },
   {
     id: 2,
@@ -48,15 +66,27 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-01-20",
     sireName: "Desert Wind Sovereign",
     damName: "Nocturne Shadow",
-    image: "/src/assets/images/horse_arabian_stallion_1790702784701.jpg",
+    image: arabianStallion,
     priceEth: 0.020,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "Purebred black Arabian stallion with unmatched endurance across long-distance stamina races and refined desert pedigree.",
     thaiDescription: "ม้าพันธุ์อาหรับแท้ ขนสีดำขลับประดุจหินออบซิเดียน อึดทนทานเหนือชั้นบนระยะทางไกล สายเลือดเก่าแก่จากทะเลทราย",
     dnaHash: "0x4b78912cefab7823901bca8912ef34091aefc34091ab7612efc450912bcde890",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "stone"
+    accentColor: "stone",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0102",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) & สมาคมม้าพันธุ์อาหรับสากล (WAHO)",
+      issueDate: "2024-01-28",
+      microchipId: "985141002349195",
+      physicalMarkings: "แต้มเปลวเพลิงสีขาวกลางสันจมูก (Stripe marking), ข้อเท้าสีขาวขาหน้าซ้าย, ขวัญหมุนคู่บริเวณหัวไหล่",
+      colorAndCoat: "สีดำสนิทขลับเงา ไร้จุดด่างบนลำตัว (Raven Black)",
+      registrarSignature: "ดร. กฤษดา ศรีศิวลักษณ์ (นายทะเบียนสมาคม)",
+      documentFileName: "Equine_Passport_TEF102_ObsidianStorm.pdf",
+      verifiedHash: "0x4b78912cefab7823901bca8912ef34091aefc34091ab7612efc450912bcde890"
+    }
   },
   {
     id: 3,
@@ -75,15 +105,27 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-05-02",
     sireName: "Imperio Real",
     damName: "Perla de Sevilla",
-    image: "/src/assets/images/horse_pearl_andalusian_1790702807758.jpg",
+    image: pearlAndalusian,
     priceEth: 0.012,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "Dappled pearl-grey Andalusian with superior agility, rhythmic cadence, and royal Spanish lineage.",
     thaiDescription: "ม้าอันดาลูเซียนสีไข่มุกประกายเทา ความคล่องแคล่วและการควบคุมจังหวะก้าววิ่งระดับราชสำนักสเปน เหมาะแก่การเพาะพันธุ์",
     dnaHash: "0xc89120348912abecde8901247891238947abef10928374a10892e84742a225Ac",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "emerald"
+    accentColor: "emerald",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0103",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) & สมาคมผู้เลี้ยงม้าสายพันธุ์สเปน (PRE)",
+      issueDate: "2024-05-10",
+      microchipId: "985141002349210",
+      physicalMarkings: "ลายเกล็ดประกายเทาบริเวณสะโพก (Dapple Grey), ขอบกีบสีงาช้าง, ขวัญบริเวณโคนหาง",
+      colorAndCoat: "สีเทาไข่มุกประกายเงิน (Dappled Pearl Grey)",
+      registrarSignature: "น.สพ. ชาญวิทย์ สุวรรณเมธา (นายทะเบียน)",
+      documentFileName: "Equine_Passport_TEF103_RoyalValiente.pdf",
+      verifiedHash: "0xc89120348912abecde8901247891238947abef10928374a10892e84742a225Ac"
+    }
   },
   {
     id: 4,
@@ -102,15 +144,27 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-07-11",
     sireName: "Golden Eclipse",
     damName: "Royal Valiente",
-    image: "/src/assets/images/hero_equine_nft_1790702770948.jpg",
+    image: heroEquine,
     priceEth: 0.019,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "First-generation Pegasus bloodline mare bred from champion sire. Exceptional top speed and aerostatic stride rhythm.",
     thaiDescription: "ม้าแข่งเพศเมียสายเลือดเปกาซัส Gen-1 สืบทอดความเร็วสูงสุดจากสุริยันทองคำ ก้าวกระโดดลอยตัวอย่างสมบูรณ์แบบ",
     dnaHash: "0x78901234567890abcdef1234567890abcdef1234567890abcdef1234567890ab",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "sky"
+    accentColor: "sky",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0104",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) - ทะเบียนพิเศษสายพันธุ์พัฒนา",
+      issueDate: "2024-07-18",
+      microchipId: "985141002349228",
+      physicalMarkings: "แผงคอสีเงินเหลือบมรกต, ปลายกีบเท้าทั้งสี่เป็นสีนิล, ขวัญเอกลักษณ์กลางอก",
+      colorAndCoat: "สีมรกตประกายเงิน (Emerald Silver Coat)",
+      registrarSignature: "น.สพ. วรพงษ์ เกียรติวานิช (นายทะเบียนกลาง)",
+      documentFileName: "Equine_Passport_TEF104_CelestiaZephyr.pdf",
+      verifiedHash: "0x78901234567890abcdef1234567890abcdef1234567890abcdef1234567890ab"
+    }
   },
   {
     id: 5,
@@ -129,15 +183,27 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-04-18",
     sireName: "Thunder Ridge",
     damName: "Prairie Blossom",
-    image: "/src/assets/images/horse_golden_thoroughbred_1790702796493.jpg",
+    image: goldenThoroughbred,
     priceEth: 0.010,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "Untamed American Mustang with fierce racing tenacity and rugged terrain resilience.",
     thaiDescription: "ม้ามัสแตงป่าสายเลือดดุดัน แข็งแกร่งทนทานทุกสภาพสนามแข่ง สัญชาตญาณสัตว์ป่าพร้อมสู้ทุกคู่แข่ง",
     dnaHash: "0x345678901234567890abcdef1234567890abcdef1234567890abcdef12345678",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "amber"
+    accentColor: "amber",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0105",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) & สมาคมม้ามัสแตง",
+      issueDate: "2024-04-25",
+      microchipId: "985141002349241",
+      physicalMarkings: "แถบสีเข้มพาดยาวตามแนวกระดูกสันหลัง (Dorsal stripe), ถุงเท้าสีดำทั้งสี่ขา, ขวัญ 3 จุด",
+      colorAndCoat: "สีแทนเข้มลายทางม้าป่า (Dun / Buckskin)",
+      registrarSignature: "ดร. กฤษดา ศรีศิวลักษณ์ (นายทะเบียนสมาคม)",
+      documentFileName: "Equine_Passport_TEF105_WildPrairieGhost.pdf",
+      verifiedHash: "0x345678901234567890abcdef1234567890abcdef1234567890abcdef12345678"
+    }
   },
   {
     id: 6,
@@ -156,16 +222,28 @@ export const INITIAL_HORSES: HorseItem[] = [
     birthDate: "2024-08-01",
     sireName: "Obsidian Storm",
     damName: "Al-Zahra",
-    image: "/src/assets/images/horse_arabian_stallion_1790702784701.jpg",
+    image: arabianStallion,
     priceEth: 0.015,
     isListed: true,
+    listingStatus: 'approved_listed',
     owner: ADMIN_ADDRESS,
     description: "Daughter of Obsidian Storm, inheriting graceful gait and explosive sprint burst in sand conditions.",
     thaiDescription: "ทายาทสายตรงของพายุทมิฬ สืบทอดพละกำลังและการวิ่งบนผืนทรายได้อย่างคล่องแคล่ว มีพลังสปีดปลายเฉียบขาด",
     dnaHash: "0xef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd",
     contractAddress: HORSE_NFT_CONTRACT_ADDRESS,
-    accentColor: "stone"
+    accentColor: "stone",
+    passport: {
+      certificateNumber: "TEF-REG-2024-0106",
+      issuingAuthority: "สมาคมกีฬาขี่ม้าแห่งประเทศไทย (TEF) & สมาคมม้าพันธุ์อาหรับสากล (WAHO)",
+      issueDate: "2024-08-08",
+      microchipId: "985141002349260",
+      physicalMarkings: "แต้มเสี้ยวจันทร์สีขาวเหนือตาขวา, ถุงเท้าสีขาวขาหลังซ้าย, ขวัญบริเวณกึ่งกลางอก",
+      colorAndCoat: "สีน้ำตาลเข้มปนดำเงา (Dark Bay)",
+      registrarSignature: "น.สพ. ชาญวิทย์ สุวรรณเมธา (นายทะเบียน)",
+      documentFileName: "Equine_Passport_TEF106_DesertMirage.pdf",
+      verifiedHash: "0xef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd"
+    }
   }
 ];
 
-export const HERO_IMAGE = "/src/assets/images/hero_equine_nft_1790702770948.jpg";
+export const HERO_IMAGE = heroEquine;

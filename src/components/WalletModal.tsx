@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { WalletState, Web3Transaction } from '../types/horse';
-import { X, Wallet, ArrowUpRight, Copy, Check, RefreshCw, ExternalLink, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { X, Wallet, ArrowUpRight, Copy, Check, RefreshCw, ExternalLink, ShieldCheck, AlertTriangle, LogOut } from 'lucide-react';
 
 interface WalletModalProps {
   isOpen: boolean;
@@ -9,6 +9,7 @@ interface WalletModalProps {
   onRefreshBalance: () => void;
   onSwitchToSepolia: () => void;
   onConnectMetaMask: () => void;
+  onDisconnect: () => void;
   transactions: Web3Transaction[];
   lang: 'th' | 'en';
 }
@@ -20,6 +21,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
   onRefreshBalance,
   onSwitchToSepolia,
   onConnectMetaMask,
+  onDisconnect,
   transactions,
   lang
 }) => {
@@ -171,21 +173,31 @@ export const WalletModal: React.FC<WalletModalProps> = ({
           </div>
 
           {/* Action Row */}
-          <div className="flex items-center justify-between gap-3">
-            <button
-              onClick={onConnectMetaMask}
-              className="flex-1 py-2.5 px-3 text-xs font-semibold bg-stone-800 hover:bg-stone-700 border border-stone-700 rounded-lg text-stone-200 transition-colors font-mono flex items-center justify-center gap-1.5"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>{lang === 'th' ? 'เชื่อมต่อใหม่ / สลับบัญชี' : 'Reconnect MetaMask'}</span>
-            </button>
+          <div className="space-y-2.5">
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={onConnectMetaMask}
+                className="py-2.5 px-3 text-xs font-semibold bg-stone-800 hover:bg-stone-700 border border-stone-700 rounded-lg text-stone-200 transition-colors font-mono flex items-center justify-center gap-1.5"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                <span>{lang === 'th' ? 'เชื่อมต่อใหม่ / สลับบัญชี' : 'Reconnect / Switch'}</span>
+              </button>
+
+              <button
+                onClick={onDisconnect}
+                className="py-2.5 px-3 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 rounded-lg transition-colors font-mono flex items-center justify-center gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                <span>{lang === 'th' ? 'ออกจากระบบ' : 'Disconnect'}</span>
+              </button>
+            </div>
 
             {!wallet.isSepolia && (
               <button
                 onClick={onSwitchToSepolia}
-                className="flex-1 py-2.5 px-3 text-xs font-semibold bg-amber-400 hover:bg-amber-300 text-stone-950 rounded-lg transition-colors font-mono"
+                className="w-full py-2.5 px-3 text-xs font-semibold bg-amber-400 hover:bg-amber-300 text-stone-950 rounded-lg transition-colors font-mono"
               >
-                {lang === 'th' ? 'สลับไป Sepolia' : 'Switch Network'}
+                {lang === 'th' ? 'สลับไปยังเครือข่าย Sepolia' : 'Switch to Sepolia Network'}
               </button>
             )}
           </div>

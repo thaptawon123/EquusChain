@@ -1,6 +1,7 @@
 import React from 'react';
 import { HorseItem } from '../types/horse';
-import { Zap, Activity, Award, ShoppingBag, Eye } from 'lucide-react';
+import { Zap, Activity, Award, ShoppingBag, Eye, Clock, ShieldCheck, Tag } from 'lucide-react';
+import { goldenThoroughbred } from '../data/mockHorses';
 
 interface HorseCardProps {
   horse: HorseItem;
@@ -17,12 +18,14 @@ export const HorseCard: React.FC<HorseCardProps> = ({
   isOwner,
   lang
 }) => {
+  const isPending = horse.listingStatus === 'pending_approval';
+
   return (
     <article
       onClick={() => onSelect(horse)}
       className="group cursor-pointer rounded-xl border border-stone-800/80 bg-stone-900/60 hover:bg-stone-900 transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-950/20 flex flex-col overflow-hidden"
     >
-      {/* 65-75% Image visual slot */}
+      {/* Image visual slot */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-950">
         <img
           src={horse.image}
@@ -31,7 +34,11 @@ export const HorseCard: React.FC<HorseCardProps> = ({
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           onError={(e) => {
             const target = e.currentTarget;
-            target.style.display = 'none';
+            if (target.src.includes('/src/assets/images/')) {
+              target.src = target.src.replace('/src/assets/images/', '/images/');
+            } else if (!target.src.includes(goldenThoroughbred)) {
+              target.src = goldenThoroughbred;
+            }
           }}
         />
 
@@ -43,7 +50,19 @@ export const HorseCard: React.FC<HorseCardProps> = ({
         {/* Subtle Scrim */}
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent pointer-events-none" />
 
-        {/* Top-Right Token ID - Clean unboxed text with subtle backdrop */}
+        {/* Top-Left: Approval / Listing Status Badge */}
+        {isPending ? (
+          <div className="absolute top-2.5 left-3 bg-amber-500/90 text-stone-950 backdrop-blur-sm px-2 py-0.5 rounded text-[11px] font-mono font-semibold flex items-center gap-1 shadow-md">
+            <Clock className="w-3 h-3" />
+            <span>{lang === 'th' ? 'รอแอดมินอนุมัติ' : 'Pending Approval'}</span>
+          </div>
+        ) : isOwner ? (
+          <div className="absolute top-2.5 left-3 bg-emerald-500/80 text-stone-950 backdrop-blur-sm px-2 py-0.5 rounded text-[11px] font-mono font-semibold flex items-center gap-1 shadow-md">
+            <span>{lang === 'th' ? 'ม้าของคุณ' : 'Your Horse'}</span>
+          </div>
+        ) : null}
+
+        {/* Top-Right Token ID */}
         <div className="absolute top-2.5 right-3 bg-stone-950/80 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-mono text-stone-400 border border-stone-800">
           #{horse.tokenId}
         </div>
@@ -62,11 +81,18 @@ export const HorseCard: React.FC<HorseCardProps> = ({
       {/* Card Body */}
       <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
-          {/* Metadata: Bloodline - Zero-pill discipline */}
-          <div className="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
-            <span className="text-amber-400/90 font-medium">{horse.bloodline}</span>
-            <span aria-hidden="true">·</span>
-            <span>{horse.racesWon}/{horse.totalRaces} Wins</span>
+          {/* Metadata: Bloodline & Equine Passport Badge */}
+          <div className="flex items-center justify-between text-xs text-stone-400 font-mono">
+            <div className="flex items-center gap-1.5">
+              <span className="text-amber-400/90 font-medium">{horse.bloodline}</span>
+              <span aria-hidden="true">·</span>
+              <span>{horse.racesWon}/{horse.totalRaces} Wins</span>
+            </div>
+            {horse.passport && (
+              <span className="text-[10px] text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/30 flex items-center gap-1 font-semibold" title="มีใบสิชล / ใบรูปพรรณม้ารับรอง">
+                <span>🛡️ {lang === 'th' ? 'ใบสิชล TEF' : 'Passport'}</span>
+              </span>
+            )}
           </div>
 
           {/* Horse Title */}
@@ -74,7 +100,7 @@ export const HorseCard: React.FC<HorseCardProps> = ({
             {lang === 'th' ? horse.thaiName : horse.name}
           </h3>
 
-          {/* Key Physical Stats (Speed, Stamina, Agility) */}
+          {/* Key Physical Stats */}
           <div className="mt-3 grid grid-cols-3 gap-2 border-y border-stone-800/60 py-2 text-xs font-mono">
             <div>
               <div className="text-stone-500 text-[10px] uppercase">
@@ -107,17 +133,25 @@ export const HorseCard: React.FC<HorseCardProps> = ({
         <div className="mt-3.5 pt-1 flex items-center justify-between">
           <div>
             <div className="text-[10px] uppercase tracking-wider text-stone-500 font-mono">
-              {horse.isListed ? (lang === 'th' ? 'ราคาเสนอขาย' : 'Price') : (lang === 'th' ? 'สถานะ' : 'Status')}
+              {isPending
+                ? (lang === 'th' ? 'ขอตั้งขายที่' : 'Pending Price')
+                : horse.isListed
+                ? (lang === 'th' ? 'ราคาเสนอขาย' : 'Price')
+                : (lang === 'th' ? 'สถานะ' : 'Status')}
             </div>
-            {horse.isListed ? (
+            {isPending ? (
+              <div className="flex items-baseline gap-1">
+                <span className="font-mono text-base font-bold text-amber-300 tabular-nums">
+                  {horse.pendingPriceEth ?? horse.priceEth}
+                </span>
+                <span className="font-mono text-xs text-stone-400">SepoliaETH</span>
+              </div>
+            ) : horse.isListed ? (
               <div className="flex items-baseline gap-1">
                 <span className="font-mono text-base font-bold text-amber-400 tabular-nums">
                   {horse.priceEth}
                 </span>
                 <span className="font-mono text-xs text-stone-400">SepoliaETH</span>
-                <span className="text-[11px] text-stone-500 font-mono hidden sm:inline">
-                  (~${(horse.priceEth * 3150).toLocaleString()})
-                </span>
               </div>
             ) : (
               <div className="text-xs font-mono text-stone-400">
@@ -138,7 +172,7 @@ export const HorseCard: React.FC<HorseCardProps> = ({
             {horse.isListed && !isOwner && onQuickBuy && (
               <button
                 onClick={() => onQuickBuy(horse)}
-                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-stone-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors font-mono whitespace-nowrap"
+                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-stone-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors font-mono whitespace-nowrap shadow-sm hover:shadow"
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
                 <span>{lang === 'th' ? 'ซื้อทันที' : 'Buy'}</span>
@@ -148,9 +182,9 @@ export const HorseCard: React.FC<HorseCardProps> = ({
             {isOwner && (
               <button
                 onClick={() => onSelect(horse)}
-                className="px-2.5 py-1.5 text-xs font-medium text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg transition-colors font-mono whitespace-nowrap"
+                className="px-2.5 py-1.5 text-xs font-medium text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-lg transition-colors font-mono whitespace-nowrap"
               >
-                {lang === 'th' ? 'จัดการ' : 'Manage'}
+                {isPending ? (lang === 'th' ? 'ดูคำขอ' : 'Request') : (lang === 'th' ? 'จัดการ' : 'Manage')}
               </button>
             )}
           </div>
